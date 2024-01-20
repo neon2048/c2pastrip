@@ -1,0 +1,27 @@
+name: Rust
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Build
+      run: cargo build --verbose --release
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        # Artifact name
+        name: c2pastrip
+        path: target/release/c2pastrip
